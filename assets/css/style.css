@@ -1,0 +1,86 @@
+@import url('https://fonts.googleapis.com/css2?family=Kenia&family=Rubik+Moonrocks&family=Silkscreen&family=Zen+Antique&display=swap');
+
+
+body {
+    
+    margin: 0;
+    background-image: url(../images/sampourai.jpg);
+    background-size:cover;
+    background-position-x: 400px;
+    background-position-y: -275px;
+    background-repeat:no-repeat;
+
+    
+    
+}
+header {
+    display: flex;
+    justify-content: center;
+    height: 100px;
+    background: rgba(0, 0, 0, 0.5);
+    color: whitesmoke;
+}
+
+#smallLine {
+    
+    position: absolute;
+    left:10%;
+    bottom: 255px;
+    text-transform: uppercase;
+    font-size: 50px;
+    letter-spacing: 10px;
+}
+
+main {
+    display: flex;
+    flex-direction: column-reverse;
+    gap: 90px;
+}
+
+#hangedMan {
+    position: absolute;
+    top: 275px;
+    height: 500px;
+}
+
+.letterContainer {
+    
+    font-family: 'zen antique';
+    display: flex;
+
+}
+
+.gameOv {
+    position: absolute;
+    top: 400px;
+    right: 50%;
+    text-align: center;
+
+}
+.rep{
+    position: absolute;
+    bottom: 190px;
+    right:35%; 
+    border: solid 1px black ;
+    border-radius: 5px;
+    width: 80px;
+    text-align: center;
+}
+
+#kbd{
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    bottom: 5%;
+    left: 25%;
+}
+.letter {
+    text-transform: capitalize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: solid 1px black;
+    border-radius: 10px;
+    width: 70px;
+    height: 30px;
+}
