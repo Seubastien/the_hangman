@@ -6,6 +6,7 @@ let hanged = document.querySelector('#hangedMan')
 let main = document.querySelector('#mainContainer')
 let endGame = document.createElement('div')
 let image = document.createElement('img')
+
 let alphaTab = [
     ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m"],
     ["n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
@@ -40,7 +41,7 @@ function randomize(min, max) {
 
 let prepareLetter = () => {
 
-    alphaTab.forEach((arr) => {
+    alphaTab.forEach((arr, index) => {
         let letterContainer = document.createElement('div')
         keyBoard.appendChild(letterContainer)
         letterContainer.classList.add("letterContainer",)
@@ -48,7 +49,16 @@ let prepareLetter = () => {
             let paragraphe = document.createElement('p')
             paragraphe.classList.add('letter')
             paragraphe.addEventListener('click', () => {
-                choiceLetter(letter)
+                if(alphaTab[index].includes(letter)){
+                    choiceLetter(letter, paragraphe)
+                paragraphe.style = "box-shadow: 1px 1px 2px black, 0 0 1em  black, 0 0 0.2em  black"
+                paragraphe.style.backgroundColor = "black"
+                paragraphe.style.color = "white"
+                paragraphe.style.cursor = "initial"
+                alphaTab[index].splice(alphaTab[index].indexOf(letter), 1)// on supprime la lettre directement sur alphaTab et non sur arr 
+                // pour pouvoir remmetre à zero le tableau initial alphaTab car arr n'est pas accessible en dehor de cette fonction.
+                }
+
             })
             letterContainer.appendChild(paragraphe)
             paragraphe.innerHTML = letter
@@ -72,10 +82,8 @@ let choiceLetter = (el) => {
     verif(el)
     hiddenWord = voidWord
     if (hiddenWord == randomWord) {
-        main.appendChild(endGame)
-        endGame.innerHTML = "YOU WIN"
-        endGame.classList.add('gameOv')
-        console.log("You win");
+        document.querySelector('#result').style.display = "block"
+        document.querySelector('#result').innerHTML = "YOU WIN"
     }
     document.querySelector('#smallLine').innerHTML = hiddenWord
 
@@ -85,23 +93,23 @@ let choiceLetter = (el) => {
 let verif = (el) => {
 
     if (!randomWord.includes(el)) {
-        if (hangedCount >= 11) {
-            endGame.classList.add('gameOv')
-            main.appendChild(endGame)
-            endGame.innerHTML = "GAME OVER"
+        displayHanged(hangedCount)
+        if (hangedCount >= 10) {
+            document.querySelector('#result').style.display = "block"
+            document.querySelector('#result').innerHTML = "GAME OVER"
+            document.querySelector('#smallLine').innerHTML = voidWord
         } else {
-            displayHanged(hangedCount)
-            hangedCount++
+           hangedCount++
         }
 
     }
 }
 
 //Fonction afficher pendu
-
 let displayHanged = (nb) => {
     image.src = ""
     image.src = `assets/images/pendu_${nb}.png`
+    image.classList.add('imgHanged')
     hanged.appendChild(image)
 }
 prepareLetter()
@@ -110,18 +118,31 @@ prepareLetter()
 let reStart = () => {
     let replay = document.createElement('div')
     replay.classList.add('rep')
-    main.appendChild(replay)
+    document.querySelector('#playAgain').appendChild(replay)
     replay.addEventListener('click', () => {
-
+        alphaTab = [
+            ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m"],
+            ["n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"],
+        
+        ]
+        document.querySelector('#result').style.display = "none"
         hangedCount = 0
         hiddenWord = ""
         document.querySelector('#hangedMan').innerHTML = ""
         generWord()
         generSmallLine(randomWord)
         endGame.innerHTML = ""
+        let letters = document.querySelectorAll(".letter");
+        letters.forEach((letter)=>{
+            letter.style = "box-shadow: 0"
+            letter.style.backgroundColor = "white"
+            letter.style.color = "black"
+        })
     })
+
     replay.innerHTML = "REJOUER"
 
 }
 reStart()
+
 
